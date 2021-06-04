@@ -1,24 +1,9 @@
 import React, { createContext, useContext, useState } from 'react';
 
-const UsersContext = createContext();
-const SetUsersContext = createContext();
-const CurrentUserContext = createContext();
-const SetCurrentUserContext = createContext();
+const GlobalContext = createContext();
 
-export function ForUsersContext() {
-    return useContext(UsersContext);
-}
-
-export function ForSetUsersContext() {
-    return useContext(SetUsersContext);
-}
-
-export function ForCurrentUserContext() {
-    return useContext(CurrentUserContext);
-}
-
-export function ForSetCurrentUserContext() {
-    return useContext(SetCurrentUserContext);
+export function useGlobalContext() {
+    return useContext(GlobalContext);
 }
 
 export function GlobalState({ children }) {
@@ -30,32 +15,30 @@ export function GlobalState({ children }) {
     const [currentUser, setCurrentUser] = useState(
         {ID: '', First: '', Last: '', Email: '', Phone: '', Location: '', Hobby: '', Actions: ''}
     );
-    
+
     const updateUser = () => {
         // alert(currentUser.First);
         const newUser = currentUser;
-        
+
         const newUsers = [...users, newUser];
-        setUsers(newUsers);        
+        setUsers(newUsers);
         setCurrentUser({ID: '', First: '', Last: '', Email: '', Phone: '', Location: '', Hobby: '', Actions: ''});
     }
 
-    const updateCurrentUser = (inputValue) => {        
-        setCurrentUser({[inputValue.name]: inputValue.value});          
+    const updateCurrentUser = (inputValue) => {
+        setCurrentUser({[inputValue.name]: inputValue.value});
     }
 
     return (
         <div>
-            <UsersContext.Provider value={users}>
-                <SetUsersContext.Provider value={updateUser}>
-                    <CurrentUserContext.Provider value={currentUser}>
-                        <SetCurrentUserContext.Provider value={updateCurrentUser}>
-                            {children}
-                        </SetCurrentUserContext.Provider>
-                    </CurrentUserContext.Provider>
-                </SetUsersContext.Provider>
-            </UsersContext.Provider>
-            
+            <GlobalContext.Provider value={{
+                users,
+                updateUser,
+                currentUser,
+                updateCurrentUser
+            }}>
+                {children}
+            </GlobalContext.Provider>
         </div>
     )
 }

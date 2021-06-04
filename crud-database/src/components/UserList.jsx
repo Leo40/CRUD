@@ -1,5 +1,5 @@
 import React from 'react'
-import { ForUsersContext} from '../context/GlobalState'
+import { useGlobalContext} from '../context/GlobalState'
 import { Link } from 'react-router-dom';
 import {
     Button,
@@ -7,10 +7,14 @@ import {
 } from 'reactstrap';
 
 function UserList() {
+  const globalContext = useGlobalContext();
+  const {
+      users,
+  } = globalContext;
 
     const renderUser = (user, index) => {
         const { ID, First, Last, Email, Phone, Location, Hobby } = user;
-        
+
         return(
           <tr key={index}>
             <td className='user-id'>{ID}</td>
@@ -20,7 +24,7 @@ function UserList() {
             <td>{Phone}</td>
             <td>{Location}</td>
             <td>{Hobby}</td>
-            <td>        
+            <td>
                 <div className="ml-auto">
                   <Link className="btn btn-warning mr-1" to="/edit/1">Edit</Link>
                   <Button color="danger">Del</Button>
@@ -30,9 +34,7 @@ function UserList() {
         )
       }
 
-    const users = ForUsersContext();
-    
-    return ( 
+    return (
         <div>
             <Table style={{width:"1000px"}}>
             <thead>
