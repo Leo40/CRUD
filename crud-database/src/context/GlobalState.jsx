@@ -26,7 +26,10 @@ export function GlobalState({ children }) {
     }
 
     const updateCurrentUser = (inputValue) => {
-        setCurrentUser({[inputValue.name]: inputValue.value});
+        setCurrentUser({
+            ...currentUser,
+            [inputValue.name]: inputValue.value
+        });
     }
 
     return (
