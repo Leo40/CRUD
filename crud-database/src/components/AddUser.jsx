@@ -1,6 +1,6 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
-import { ForUsersContext, ForSetUsersContext, ForCurrentUserContext, ForSetCurrentUserContext} from '../context/GlobalState';
+import { useGlobalContext } from '../context/GlobalState';
 import { Link } from 'react-router-dom';
 import {
     Form,
@@ -11,10 +11,12 @@ import {
 } from 'reactstrap';
 
 function AddUser() {
-    const users = ForUsersContext();
-    const updateUser = ForSetUsersContext();
-    const currentUser = ForCurrentUserContext();
-    const updateCurrentUser = ForSetCurrentUserContext();
+    const globalContext = useGlobalContext();
+    const {
+        updateUser,
+        currentUser,
+        updateCurrentUser,
+    } = globalContext;
 
     const { ID, First, Last, Email, Phone, Location, Hobby, Actions } = currentUser;
 
@@ -26,7 +28,7 @@ function AddUser() {
         updateUser()
     }
 
-    const handleInput = (e) => {        
+    const handleInput = (e) => {
         // const inputItem = [];
         // const inputItems = [...inputItem, e.target];
         updateCurrentUser(e.target);
@@ -52,7 +54,7 @@ function AddUser() {
                 <Label>Actions</Label>
                 <Input name="Action" type="text" placeholder="Enter ID" value={Actions} onChange={handleInput}></Input>
             </FormGroup>
-            <Button type="submit">Submit</Button>            
+            <Button type="submit">Submit</Button>
         </Form>
     )
 }
