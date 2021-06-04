@@ -10,7 +10,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
-  return (
+  const userId = 1;
+  return (    
     <GlobalState>
       <div style={{ maxWidth: "30rem", margin: "50px 200px" }}>
       <Router>
