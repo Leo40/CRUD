@@ -7,17 +7,19 @@ import {
 } from 'reactstrap';
 
 function UserList() {
+
   const globalContext = useGlobalContext();
   const {
       users,
+      handleDelete
   } = globalContext;
 
     const renderUser = (user, index) => {
-        const { ID, First, Last, Email, Phone, Location, Hobby } = user;
+        const { ID, First, Last, Email, Phone, Location, Hobby, key } = user;
 
         return(
           <tr key={index}>
-            <td className='user-id'>{ID}</td>
+            <td className='user-id'><strong>{index + 1}</strong></td>
             <td>{First}</td>
             <td>{Last}</td>
             <td>{Email}</td>
@@ -27,7 +29,7 @@ function UserList() {
             <td>
                 <div className="ml-auto">
                   <Link className="btn btn-warning mr-1" to="/edit/1">Edit</Link>
-                  <Button color="danger">Del</Button>
+                  <Button className="btn btn-danger" onClick={() => {handleDelete(key)}}>Del</Button>
                 </div>
             </td>
           </tr>

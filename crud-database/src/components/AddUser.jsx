@@ -1,7 +1,6 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
 import { useGlobalContext } from '../context/GlobalState';
-import { Link } from 'react-router-dom';
 import {
     Form,
     FormGroup,
@@ -13,32 +12,30 @@ import {
 function AddUser() {
     const globalContext = useGlobalContext();
     const {
-        updateUser,
+        updateUsers,
         currentUser,
         updateCurrentUser,
     } = globalContext;
 
-    const { ID, First, Last, Email, Phone, Location, Hobby, Actions } = currentUser;
+    const { First, Last, Email, Phone, Location, Hobby } = currentUser;
 
     const history = useHistory();
 
     const handleUser = (e) => {
         history.push("/");
         e.preventDefault();
-        updateUser()
+        updateUsers()
     }
 
     const handleInput = (e) => {
-        // const inputItem = [];
-        // const inputItems = [...inputItem, e.target];
         updateCurrentUser(e.target);
     }
 
     return (
+        <>
+        <h1>Enter Your Details</h1>
         <Form onSubmit={handleUser}>
             <FormGroup>
-                <Label>ID</Label>
-                <Input type="text" placeholder="Enter ID" value={ID} onChange={handleInput}></Input>
                 <Label>First</Label>
                 <Input name="First" type="text" placeholder="Enter First Name" value={First} onChange={handleInput}></Input>
                 <Label>Last</Label>
@@ -51,11 +48,10 @@ function AddUser() {
                 <Input name="Location" type="text" placeholder="Enter Location" value={Location} onChange={handleInput}></Input>
                 <Label>Hobby</Label>
                 <Input name="Hobby" type="text" placeholder="Enter Your Hobby" value={Hobby} onChange={handleInput}></Input>
-                <Label>Actions</Label>
-                <Input name="Action" type="text" placeholder="Enter ID" value={Actions} onChange={handleInput}></Input>
             </FormGroup>
             <Button type="submit">Submit</Button>
         </Form>
+        </>
     )
 }
 
