@@ -8,10 +8,7 @@ export function useGlobalContext() {
 
 //Create Users
 export function GlobalState({ children }) {   
-    const [users, setUsers] = useState([
-        {ID: '1', First: 'Jane', Last: 'Smith', Email: 'js@gmail.com', Phone: '503-555-5555', Location: 'Portland, Oregon', Hobby: 'Photography', Actions: ''},
-        {ID: '2', First: 'Tristan', Last: 'Rodriguez', Email: 'tr@gmail.com', Phone: '201-555-5555', Location: 'New York, New York', Hobby: '', Actions: ''}
-    ]);    
+    const [users, setUsers] = useState([]);    
 
     const [currentUser, setCurrentUser] = useState(
         {ID: '', First: '', Last: '', Email: '', Phone: '', Location: '', Hobby: '', Actions: '', key: Date.now()}
@@ -19,7 +16,6 @@ export function GlobalState({ children }) {
     
     //Update Current User
     const updateCurrentUser = (inputValue) => {
-        // let currentID = users.length + 1;        
         setCurrentUser({
             ...currentUser,
             [inputValue.name]: inputValue.value
@@ -34,22 +30,35 @@ export function GlobalState({ children }) {
         setCurrentUser({ID: '', First: '', Last: '', Email: '', Phone: '', Location: '', Hobby: '', Actions: '', key: Date.now()});
     }
 
-
     //Delete a User
     const handleDelete = (key) => {
-        const filtered = users.filter(user => user.key !== key);
-        setUsers(filtered);
-    
+        const filteredUsers = users.filter(user => user.key !== key);
+        setUsers(filteredUsers);    
+    }
+
+    //Display User To Be Edited
+    const handleEdit = (key) => {
+        const toBeUpdatedUser = users.find(user => user.key === key);
+        setCurrentUser(toBeUpdatedUser);
+    }
+
+    //Update Users By Reinserting Updated User
+    const editUser = () => {
+        const updatedUsers = users.map(user => currentUser.key === user.key ? currentUser : user);
+        setUsers(updatedUsers);
+        setCurrentUser({ID: '', First: '', Last: '', Email: '', Phone: '', Location: '', Hobby: '', Actions: '', key: Date.now()});
     }
 
     return (
         <div>
             <GlobalContext.Provider value={{
                 users,
-                updateUsers,
                 currentUser,
+                updateUsers,                
                 updateCurrentUser,
-                handleDelete
+                handleDelete,
+                handleEdit,
+                editUser
             }}>
                 {children}
             </GlobalContext.Provider>
