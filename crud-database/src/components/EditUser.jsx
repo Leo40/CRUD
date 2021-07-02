@@ -1,4 +1,6 @@
 import React from 'react'
+import { useGlobalContext } from '../context/GlobalState';
+import {useHistory} from 'react-router-dom';
 import {
     Form,
     FormGroup,
@@ -8,27 +10,47 @@ import {
 } from 'reactstrap';
 
 function EditUser() {
+
+    const globalContext = useGlobalContext();
+    const {
+        users,
+        updateUsers,
+        editUser,
+        currentUser,
+        updateCurrentUser,
+    } = globalContext;
+
+    const { First, Last, Email, Phone, Location, Hobby } = currentUser;
+
+    const history = useHistory();
+
+    const handleUser = (e) => {
+        history.push("/");
+        e.preventDefault();
+        editUser();
+    }
+
+    const handleInput = (e) => {
+        updateCurrentUser(e.target);
+    }
+
     return (
-        <Form>
+        <Form onSubmit={handleUser}>
             <FormGroup>
-                <Label>ID</Label>
-                <Input type="text" placeholder="Enter ID"></Input>
                 <Label>First</Label>
-                <Input type="text" placeholder="Enter ID"></Input>
+                <Input name="First" type="text" value={First} onChange={handleInput}></Input>
                 <Label>Last</Label>
-                <Input type="text" placeholder="Enter ID"></Input>
+                <Input name="Last" type="text" value={Last} onChange={handleInput}></Input>
                 <Label>Email</Label>
-                <Input type="text" placeholder="Enter ID"></Input>
+                <Input name="Email" type="text" value={Email} onChange={handleInput}></Input>
                 <Label>Phone</Label>
-                <Input type="text" placeholder="Enter ID"></Input>
+                <Input name="Phone" type="text" value={Phone} onChange={handleInput}></Input>
                 <Label>Location</Label>
-                <Input type="text" placeholder="Enter ID"></Input>
+                <Input name="Location" type="text" value={Location} onChange={handleInput}></Input>
                 <Label>Hobby</Label>
-                <Input type="text" placeholder="Enter ID"></Input>
-                <Label>Actions</Label>
-                <Input type="text" placeholder="Enter ID"></Input>
+                <Input name="Hobby" type="text" value={Hobby} onChange={handleInput}></Input>
             </FormGroup>
-            <Button type="submit">Edit</Button>
+            <Button type="submit">Submit</Button>
         </Form>
     )
 }
