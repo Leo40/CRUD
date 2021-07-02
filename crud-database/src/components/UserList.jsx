@@ -11,8 +11,8 @@ function UserList() {
   const globalContext = useGlobalContext();
   const {
       users,
-      handleDelete,
-      handleEdit
+      handleEdit,
+      displayModal
   } = globalContext;
 
     const renderUser = (user, index) => {
@@ -30,7 +30,7 @@ function UserList() {
             <td>
                 <div className="ml-auto">
                   <Link className="btn btn-warning mr-1" to="/edit/1" onClick={() => {handleEdit(key)}}>Edit</Link>
-                  <Button className="btn btn-danger" onClick={() => {handleDelete(key)}}>Del</Button>
+                  <Button className="btn btn-danger" onClick={() => {displayModal(key)}}>Del</Button>
                 </div>
             </td>
           </tr>

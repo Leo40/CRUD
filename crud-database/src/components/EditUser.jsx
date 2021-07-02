@@ -12,9 +12,7 @@ import {
 function EditUser() {
 
     const globalContext = useGlobalContext();
-    const {
-        users,
-        updateUsers,
+    const {        
         editUser,
         currentUser,
         updateCurrentUser,

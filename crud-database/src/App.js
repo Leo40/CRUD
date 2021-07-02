@@ -1,9 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// import { Modal } from 'bootstrap';
 import Home from './components/Home';
 import EditUser from './components/EditUser';
 import AddUser from './components/AddUser';
-import GlobalState from './context/GlobalState'
+import GlobalState from './context/GlobalState';
+import Modal from './components/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -16,10 +18,11 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route path="/edit/:id" component={EditUser} />
           <Route path="/add" component={AddUser} />
-        </Switch>               
+        </Switch>
       </div>
     </Router>
     </div>
+    <Modal />
   </GlobalState>
   )
 }

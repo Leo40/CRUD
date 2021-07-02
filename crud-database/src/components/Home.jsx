@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react';
 import Heading from './Heading'
 import UserList from './UserList'
 
-function Home() {
+function Home() {    
     return (
         <>
             <Heading />
-            <UserList />
+            <UserList />            
         </>
     )
 }

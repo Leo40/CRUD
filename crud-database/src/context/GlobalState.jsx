@@ -8,11 +8,17 @@ export function useGlobalContext() {
 
 //Create Users
 export function GlobalState({ children }) {   
-    const [users, setUsers] = useState([]);    
 
+    const [users, setUsers] = useState([
+        {ID: 'Axmed', First: 'Cali', Last: 'Nasir', Email: '123', Phone: '123', Location: 'Haa', Hobby: 'Hee', Actions: 'Hii', key: Date.now()},
+        {ID: 'Axmed', First: 'Cali', Last: 'Nasir', Email: '123', Phone: '123', Location: 'Haa', Hobby: 'Hee', Actions: 'Hii', key: Date.now()}
+    ]);
     const [currentUser, setCurrentUser] = useState(
         {ID: '', First: '', Last: '', Email: '', Phone: '', Location: '', Hobby: '', Actions: '', key: Date.now()}
     );
+
+    const [userClicked, setUserClicked] = useState(true);
+    const [userKey, setUserKey] = useState();
     
     //Update Current User
     const updateCurrentUser = (inputValue) => {
@@ -31,8 +37,10 @@ export function GlobalState({ children }) {
     }
 
     //Delete a User
-    const handleDelete = (key) => {
-        const filteredUsers = users.filter(user => user.key !== key);
+    const handleDelete = (userKey) => {
+        // alert(userKey);
+        setUserClicked(false);
+        const filteredUsers = users.filter(user => user.key !== userKey);
         setUsers(filteredUsers);    
     }
 
@@ -49,16 +57,33 @@ export function GlobalState({ children }) {
         setCurrentUser({ID: '', First: '', Last: '', Email: '', Phone: '', Location: '', Hobby: '', Actions: '', key: Date.now()});
     }
 
+    //Show Modal
+    const displayModal = (key) => {    
+        // alert(key);
+        setUserClicked(true);
+        setUserKey(key);
+        // alert(userClicked);
+    }
+
+    //Hide Modal
+    const closeModal = () => {
+        setUserClicked(false);
+    }
+ 
     return (
         <div>
             <GlobalContext.Provider value={{
                 users,
                 currentUser,
-                updateUsers,                
+                userClicked,
+                userKey,
+                updateUsers,
                 updateCurrentUser,
                 handleDelete,
                 handleEdit,
-                editUser
+                editUser,
+                displayModal,
+                closeModal
             }}>
                 {children}
             </GlobalContext.Provider>
